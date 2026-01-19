@@ -234,7 +234,7 @@
             </tbody>
         </table>
 
-        <a href="{{ route('detail', ['id' => 1]) }}" class="btn btn-secondary">View Product Details</a>
+        <a href="{{ route('detail', ['id' => '123']) }}" class="btn btn-secondary">View Product Details</a>
     </div>
 </body>
 
