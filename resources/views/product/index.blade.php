@@ -160,7 +160,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Product List</h1>
+            <h1>{{ $title }}</h1>
             <a href="{{ route('add') }}" class="btn">+ Add Product</a>
         </div>
 
@@ -170,67 +170,18 @@
                     <th>ID</th>
                     <th>Product Name</th>
                     <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Category</th>
-                    <th>Actions</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Laptop Dell XPS 13</td>
-                    <td class="price">$999.99</td>
-                    <td>50</td>
-                    <td><span class="category-badge">Electronics</span></td>
-                    <td>
-                        <a href="#" class="action-link edit-link">Edit</a>
-                        <a href="#" class="action-link delete-link">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>iPhone 15 Pro</td>
-                    <td class="price">$1,199.00</td>
-                    <td>30</td>
-                    <td><span class="category-badge">Electronics</span></td>
-                    <td>
-                        <a href="#" class="action-link edit-link">Edit</a>
-                        <a href="#" class="action-link delete-link">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Samsung Smart TV</td>
-                    <td class="price">$799.00</td>
-                    <td>20</td>
-                    <td><span class="category-badge">Electronics</span></td>
-                    <td>
-                        <a href="#" class="action-link edit-link">Edit</a>
-                        <a href="#" class="action-link delete-link">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Nike Air Max</td>
-                    <td class="price">$129.99</td>
-                    <td>100</td>
-                    <td><span class="category-badge">Shoes</span></td>
-                    <td>
-                        <a href="#" class="action-link edit-link">Edit</a>
-                        <a href="#" class="action-link delete-link">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Coffee Maker</td>
-                    <td class="price">$49.99</td>
-                    <td>75</td>
-                    <td><span class="category-badge">Home Appliances</span></td>
-                    <td>
-                        <a href="#" class="action-link edit-link">Edit</a>
-                        <a href="#" class="action-link delete-link">Delete</a>
-                    </td>
-                </tr>
+                @foreach ($products as $product)
+                    <tr>
+                        <td>{{ $product['id'] }}</td>
+                        <td>{{ $product['name'] }}</td>
+                        <td>{{ $product['price'] }}</td>
+                        <td>{{ $product['description'] }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 

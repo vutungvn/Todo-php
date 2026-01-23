@@ -134,7 +134,7 @@
     <div class="container">
         <h1>✨ Add New Product</h1>
 
-        <form action="" method="POST">
+        <form action="/product/store" method="POST">
             @csrf
             <div class="form-group">
                 <label for="name">📦 Product Name</label>
@@ -145,17 +145,6 @@
                 <label for="price">💰 Price</label>
                 <input type="number" id="price" name="price" step="0.01" placeholder="0.00" required>
             </div>
-
-            <div class="form-group">
-                <label for="quantity">📊 Quantity</label>
-                <input type="number" id="quantity" name="quantity" placeholder="0" required>
-            </div>
-
-            <div class="form-group">
-                <label for="category">🏷️ Category</label>
-                <input type="text" id="category" name="category" placeholder="Enter category" required>
-            </div>
-
             <div class="btn-group">
                 <button type="submit" class="btn btn-primary">Add Product</button>
                 <a href="{{ url('/product') }}" class="btn btn-secondary">Cancel</a>
