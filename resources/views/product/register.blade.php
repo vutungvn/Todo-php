@@ -123,7 +123,7 @@
             <h1>Create Account</h1>
             <p>Please fill in the form to register</p>
         </div>
-        <form action="/product/checkRegister" method="POST">
+        <form action="{{ url('/product/checkRegister') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="username">Username</label>

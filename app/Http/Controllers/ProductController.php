@@ -71,21 +71,11 @@ class ProductController extends Controller
         return view("product.register");
     }
 
-    public function checkRegister(Request $request)
+    public function checkRegister()
     {
-        // Get all input data
-        $username = $request->input('username');
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $phone = $request->input('phone');
-        $mssv = $request->input('mssv');
+        // Xử lý logic đăng ký của bạn ở đây
 
-        // Here you would typically save to database
-        // For now, just return success message with data
-        return "Registration successful!<br>" .
-            "Username: $username<br>" .
-            "Email: $email<br>" .
-            "Phone: $phone<br>" .
-            "MSSV: $mssv";
+        // Sau khi đăng ký xong, chuyển hướng sang trang login
+        return redirect('/product/login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
 }
