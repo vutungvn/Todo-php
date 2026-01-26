@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\CheckTimeAccess;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,7 +9,7 @@ Route::get('/', function () {
 });
 
 // Product
-Route::prefix('product')->group(function () {
+Route::prefix('product')->middleware(CheckTimeAccess::class)->group(function () {
     Route::controller(ProductController::class)->group(function () {
         Route::get('/', 'index')->name('product');
         Route::get('/add', 'create')->name('add');
@@ -19,13 +20,6 @@ Route::prefix('product')->group(function () {
         Route::get('/register', 'register');
         Route::post('/checkRegister', 'checkRegister');
     });
-
-    // Matches The "/admin/users" URL
-    // Route::get('/', [ProductController::class, 'index'])->name('product');
-
-    // Route::get('/add', [ProductController::class, "create"])->name('add');
-
-    // Route::get('/detail/{id?}', [ProductController::class, "getDetail"])->name('detail');
 });
 
 // Page Not Found
