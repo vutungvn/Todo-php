@@ -16,6 +16,9 @@ class AgeController extends Controller
     public function CheckAge(Request $request)
     {
         $age = $request->input('age');
+
+        // Lưu session
+        session(['age' => $age]);
         return "Bạn đã đủ 18 tuổi! Tuổi của bạn: " . $age;
     }
 }
