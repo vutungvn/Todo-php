@@ -122,6 +122,7 @@
             font-weight: 500;
             font-size: 13px;
             transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .edit-link {
@@ -171,6 +172,7 @@
                     <th>Product Name</th>
                     <th>Price</th>
                     <th>Stock</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -178,8 +180,13 @@
                     <tr>
                         <td>{{ $product['id'] }}</td>
                         <td>{{ $product['name'] }}</td>
-                        <td>{{ $product['price'] }}</td>
+                        <td class="price">${{ number_format($product['price'], 2) }}</td>
                         <td>{{ $product['stock'] }}</td>
+                        <td>
+                            <a href="{{route('edit', ['id' => $product['id']]) }}" class="action-link edit-link">Edit</a>
+                            <a href="" class="action-link delete-link"
+                                onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

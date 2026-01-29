@@ -23,6 +23,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view("product.add");
     }
 
     /**
@@ -31,6 +32,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->stock = $request->input('stock');
+        $product->save();
+        return redirect('/product');
     }
 
     /**
@@ -47,6 +54,8 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         //
+        $product = Product::find($id);
+        return view('product.edit', ['product' => $product]);
     }
 
     /**
@@ -55,6 +64,12 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $product = Product::find($id);
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->stock = $request->input('stock');
+        $product->save();
+        return redirect('/product');
     }
 
     /**

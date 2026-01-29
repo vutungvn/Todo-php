@@ -16,6 +16,8 @@ Route::prefix('product')->group(function () {
     Route::controller(ProductController::class)->group(function () {
         Route::get('/', 'index')->name('product');
         Route::get('/add', 'create')->name('add');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::put('/update/{id}', 'update')->name('update');
         Route::get('/detail/{id?}', 'getDetail')->name('detail');
         Route::post('/store', 'store');
         Route::get('/login', 'login');
