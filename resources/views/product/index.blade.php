@@ -160,7 +160,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>{{ $title }}</h1>
+            <h1>Product List</h1>
             <a href="{{ route('add') }}" class="btn">+ Add Product</a>
         </div>
 
@@ -170,7 +170,7 @@
                     <th>ID</th>
                     <th>Product Name</th>
                     <th>Price</th>
-                    <th>Description</th>
+                    <th>Stock</th>
                 </tr>
             </thead>
             <tbody>
@@ -179,7 +179,7 @@
                         <td>{{ $product['id'] }}</td>
                         <td>{{ $product['name'] }}</td>
                         <td>{{ $product['price'] }}</td>
-                        <td>{{ $product['description'] }}</td>
+                        <td>{{ $product['stock'] }}</td>
                     </tr>
                 @endforeach
             </tbody>
