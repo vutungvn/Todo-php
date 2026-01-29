@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Middleware\CheckTimeAccess;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ProductController extends Controller
 {
+
+    // public static function middleware(): array
+    // {
+    //     return [CheckTimeAccess::class];
+    // }
+
     //
     public function index()
     {
@@ -71,11 +79,12 @@ class ProductController extends Controller
         return view("product.register");
     }
 
-    public function checkRegister()
+    public function checkRegister(Request $request)
     {
-        // Xử lý logic đăng ký của bạn ở đây
-
-        // Sau khi đăng ký xong, chuyển hướng sang trang login
-        return redirect('/product/login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
+        if ($request->input("username") == "Thanh Tùng" && $request->input("password") == $request->input("password_confirmation") && $request->input("mssv") == "0284367" && $request->input("class") == "67PM1" && $request->input("gender") == "nam") {
+            return "Đăng ký thành công!";
+        } else {
+            return "Đăng ký thất bại!";
+        }
     }
 }

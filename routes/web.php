@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AgeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TestController;
 use App\Http\Middleware\CheckTimeAccess;
 use Illuminate\Support\Facades\Route;
 
@@ -9,7 +11,7 @@ Route::get('/', function () {
 });
 
 // Product
-Route::prefix('product')->middleware(CheckTimeAccess::class)->group(function () {
+Route::prefix('product')->group(function () {
     Route::controller(ProductController::class)->group(function () {
         Route::get('/', 'index')->name('product');
         Route::get('/add', 'create')->name('add');
@@ -21,6 +23,8 @@ Route::prefix('product')->middleware(CheckTimeAccess::class)->group(function () 
         Route::post('/checkRegister', 'checkRegister');
     });
 });
+
+Route::resource('test', TestController::class);
 
 // Page Not Found
 Route::fallback(function () {
@@ -37,3 +41,9 @@ Route::get('/banco/{n}', function (int $n) {
     return view('banco.index', ['n' => $n]);
 });
 
+// Tuôỉ
+Route::controller(AgeController::class)->group(function () {
+    Route::get('/age', function () {
+        return view('age.age-form');
+    })->name('age');
+});

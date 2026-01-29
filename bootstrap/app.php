@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckAge;
 use App\Http\Middleware\CheckTimeAccess;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         //
         // $middleware->append(CheckTimeAccess::class);
+        // $middleware->append(CheckAge::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

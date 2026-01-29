@@ -130,20 +130,25 @@
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                <label for="password_confirmation">Confirm Password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    placeholder="Enter your password again" required>
             </div>
             <div class="form-group">
                 <label for="mssv">MSSV (Student ID)</label>
                 <input type="text" id="mssv" name="mssv" placeholder="Enter your student ID" required>
+            </div>
+            <div class="form-group">
+                <label for="class">Class</label>
+                <input type="text" id="class" name="class" placeholder="Enter your class" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <input type="text" id="gender" name="gender" placeholder="Enter your gender" required>
             </div>
             <button type="submit" class="btn-register">Register</button>
         </form>
