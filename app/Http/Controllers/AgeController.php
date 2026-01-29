@@ -8,8 +8,14 @@ use View;
 class AgeController extends Controller
 {
     //
-    public function CheckAge(Request $request)
+    public function Show(Request $request)
     {
         return View('age.age-form');
+    }
+
+    public function CheckAge(Request $request)
+    {
+        $age = $request->input('age');
+        return "Bạn đã đủ 18 tuổi! Tuổi của bạn: " . $age;
     }
 }

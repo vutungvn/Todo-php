@@ -3,6 +3,7 @@
 use App\Http\Controllers\AgeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TestController;
+use App\Http\Middleware\CheckAge;
 use App\Http\Middleware\CheckTimeAccess;
 use Illuminate\Support\Facades\Route;
 
@@ -41,9 +42,8 @@ Route::get('/banco/{n}', function (int $n) {
     return view('banco.index', ['n' => $n]);
 });
 
-// Tuôỉ
+// Tuổi
 Route::controller(AgeController::class)->group(function () {
-    Route::get('/age', function () {
-        return view('age.age-form');
-    })->name('age');
+    Route::get('/age', 'Show')->name('age');
+    Route::post('/age/check', 'CheckAge')->middleware(CheckAge::class)->name('checkAge');
 });
