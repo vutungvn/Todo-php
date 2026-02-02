@@ -49,3 +49,8 @@ Route::controller(AgeController::class)->group(function () {
     Route::get('/age', 'Show')->name('age');
     Route::post('/age/check', 'CheckAge')->middleware(CheckAge::class)->name('checkAge');
 });
+
+// Admin Layout
+Route::get('/admin', function () {
+    return view('layout.admin');
+});
