@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AgeController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\CheckAge;
@@ -27,8 +28,6 @@ Route::prefix('product')->group(function () {
     });
 });
 
-Route::resource('test', TestController::class);
-
 // Page Not Found
 Route::fallback(function () {
     return View("error.404");
@@ -44,13 +43,10 @@ Route::get('/banco/{n}', function (int $n) {
     return view('banco.index', ['n' => $n]);
 });
 
-// Tuổi
-Route::controller(AgeController::class)->group(function () {
-    Route::get('/age', 'Show')->name('age');
-    Route::post('/age/check', 'CheckAge')->middleware(CheckAge::class)->name('checkAge');
-});
-
 // Admin Layout
 Route::get('/admin', function () {
     return view('layout.admin');
 });
+
+Route::get('/login', [AuthController::class, 'showLogin']);
+Route::post('/checkLogin', [AuthController::class, 'checkLogin'])->name('checkLogin');

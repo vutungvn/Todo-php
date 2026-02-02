@@ -24,7 +24,7 @@ class ProductController extends Controller
     public function create()
     {
         //
-        return view("product.add");
+        return view("admin.product.add");
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductController extends Controller
     {
         //
         $product = Product::find($id);
-        return view('product.edit', ['product' => $product]);
+        return view('admin.product.edit', ['product' => $product]);
     }
 
     /**
