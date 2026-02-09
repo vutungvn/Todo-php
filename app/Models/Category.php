@@ -18,4 +18,19 @@ class Category extends Model
         "is_active",
         "is_delete",
     ];
+
+    public function isDescendantOf($parentId)
+    {
+        $parent = Category::find($parentId);
+
+        while ($parent) {
+            if ($parent->id == $this->id) {
+                return true;
+            }
+            $parent = $parent->parent;
+        }
+
+        return false;
+    }
+
 }

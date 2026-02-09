@@ -50,5 +50,7 @@ Route::post('/checkLogin', [AuthController::class, 'checkLogin'])->name('checkLo
 Route::prefix('category')->group(function () {
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/', 'index')->name('category');
+        Route::get('/create', 'create')->name('category.create');
+        Route::post('/store', 'store')->name('category.store');
     });
 });

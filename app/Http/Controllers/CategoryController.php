@@ -24,6 +24,12 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        // Lấy các danh mục CHA (parent_id = null)
+        $categories = Category::whereNull('parent_id')
+            ->where('is_delete', 0)
+            ->get();
+
+        return view('admin.category.create', compact('categories'));
     }
 
     /**
@@ -32,6 +38,15 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        Category::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'parent_id' => $request->parent_id,
+            'is_active' => $request->has('is_active') ? 1 : 0,
+            'is_delete' => 0,
+        ]);
+
+        return redirect()->route('category');
     }
 
     /**
