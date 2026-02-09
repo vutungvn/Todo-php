@@ -52,5 +52,8 @@ Route::prefix('category')->group(function () {
         Route::get('/', 'index')->name('category');
         Route::get('/create', 'create')->name('category.create');
         Route::post('/store', 'store')->name('category.store');
+        Route::get('/edit/{id}', 'edit')->name('category.edit');
+        Route::put('/update/{id}', 'update')->name('category.update');
+        Route::delete('/delete/{id}', 'destroy')->name('category.destroy');
     });
 });

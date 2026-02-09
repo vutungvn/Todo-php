@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         //
         $title = "Category";
-        $categories = Category::all();
+        $categories = Category::where('is_delete', 0)->get();
         return view("admin.category.index", compact('categories', 'title'));
     }
 
@@ -55,6 +55,7 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         //
+
     }
 
     /**
@@ -63,6 +64,12 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         //
+        $category = Category::findOrFail($id);
+        // Lấy các category KHÔNG PHẢI là chính nó và không phải con cháu
+        $categories = Category::where('id', '!=', $category->id)
+            ->where('is_delete', 0)
+            ->get();
+        return view('admin.category.edit', compact('category', 'categories'));
     }
 
     /**
@@ -71,13 +78,51 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $category = Category::findOrFail($id);
+
+        if ($request->parent_id == $category->id) {
+            return back()->withErrors([
+                'parent_id' => 'Không được chọn chính danh mục này làm cha'
+            ]);
+        }
+
+        if ($request->parent_id && $category->isDescendantOf($request->parent_id)) {
+            return back()->withErrors([
+                'parent_id' => 'Không được chọn danh mục con hoặc cháu làm cha'
+            ]);
+        }
+
+        $category->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'parent_id' => $request->parent_id,
+            'is_active' => $request->has('is_active') ? 1 : 0,
+        ]);
+
+        return redirect()->route('category');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        $hasChildren = Category::where('parent_id', $category->id)
+            ->where('is_delete', 0)
+            ->exists();
+
+        if ($hasChildren) {
+            return back()->withErrors([
+                'error' => 'Không thể xóa danh mục đang có danh mục con'
+            ]);
+        }
+
+        $category->update([
+            'is_delete' => 1
+        ]);
+
+        return redirect()->route('category');
     }
 }

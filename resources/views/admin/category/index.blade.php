@@ -28,9 +28,19 @@
                     <td>{{ $category['created_at'] }}</td>
                     <td>{{ $category['updated_at'] }}</td>
                     <td>
-                        <a href="{{route('edit', ['id' => $category['id']]) }}" class="action-link edit-link">Edit</a>
-                        <a href="" class="action-link delete-link"
-                            onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                        <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <form action="{{ route('category.destroy', ['id' => $category['id']]) }}" method="POST"
+                            style="display:inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="btn btn-danger btn-sm" type="submit">
+                                Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
