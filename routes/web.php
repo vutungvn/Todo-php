@@ -1,11 +1,8 @@
 <?php
 
-use App\Http\Controllers\AgeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\TestController;
-use App\Http\Middleware\CheckAge;
-use App\Http\Middleware\CheckTimeAccess;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,9 +41,14 @@ Route::get('/banco/{n}', function (int $n) {
 });
 
 // Admin Layout
-Route::get('/admin', function () {
-    return view('layout.admin');
-});
+Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
 
 Route::get('/login', [AuthController::class, 'showLogin']);
 Route::post('/checkLogin', [AuthController::class, 'checkLogin'])->name('checkLogin');
+
+// Category Management
+Route::prefix('category')->group(function () {
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/', 'index')->name('category');
+    });
+});
