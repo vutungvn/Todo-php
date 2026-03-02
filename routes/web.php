@@ -5,9 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home.index');
-});
+
 
 // Product
 Route::prefix('product')->group(function () {
@@ -56,4 +54,9 @@ Route::prefix('category')->group(function () {
         Route::put('/update/{id}', 'update')->name('category.update');
         Route::delete('/delete/{id}', 'destroy')->name('category.destroy');
     });
+});
+
+// Home
+Route::get('/', function () {
+    return view('customer.home.index');
 });
