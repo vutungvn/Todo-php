@@ -12,9 +12,15 @@ return new class extends Migration {
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name');
-            $table->decimal('price', 8, 2);
-            $table->integer('stock');
+            $table->decimal('price', 10, 2)->unsigned();
+            $table->decimal('sale_price', 10, 2)->unsigned()->nullable();
+            $table->unsignedInteger('stock')->default(0);
+            $table->text('description')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('is_active')->default(1);
+            $table->boolean('is_delete')->default(0); // xóa mềm
             $table->timestamps();
         });
     }
