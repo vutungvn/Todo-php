@@ -35,8 +35,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
-        return view("admin.product.add");
+        $categories = Category::where('is_delete', 0)->where('is_active', 1)->get();
+        $title = "Thêm sản phẩm";
+        return view("admin.product.create", compact('categories', 'title'));
     }
 
     /**
@@ -44,13 +45,22 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $product = new Product();
-        $product->name = $request->input('name');
-        $product->price = $request->input('price');
-        $product->stock = $request->input('stock');
-        $product->save();
-        return redirect('/product');
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0|lte:price',
+            'stock' => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'image' => 'nullable|string',
+        ]);
+
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
+        $validated['is_delete'] = 0;
+
+        Product::create($validated);
+
+        return redirect()->route('product')->with('success', 'Thêm sản phẩm thành công');
     }
 
     /**
