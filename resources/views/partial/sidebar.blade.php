@@ -78,7 +78,7 @@
                     </a>
                     <ul class="nav nav-treeview" style="display: block;">
                         <li class="nav-item">
-                            <a href="{{ route('category') }}" class="nav-link">
+                            <a href="{{ route('product') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Xem danh sách</p>
                             </a>

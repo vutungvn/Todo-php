@@ -5,24 +5,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-
-
-// Product
-Route::prefix('product')->group(function () {
-    Route::controller(ProductController::class)->group(function () {
-        Route::get('/', 'index')->name('product');
-        Route::get('/add', 'create')->name('add');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::put('/update/{id}', 'update')->name('update');
-        Route::get('/detail/{id?}', 'getDetail')->name('detail');
-        Route::post('/store', 'store');
-        Route::get('/login', 'login');
-        Route::post('/checkLogin', 'checkLogin');
-        Route::get('/register', 'register');
-        Route::post('/checkRegister', 'checkRegister');
-    });
-});
-
 // Page Not Found
 Route::fallback(function () {
     return View("error.404");
@@ -53,6 +35,22 @@ Route::prefix('category')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('category.edit');
         Route::put('/update/{id}', 'update')->name('category.update');
         Route::delete('/delete/{id}', 'destroy')->name('category.destroy');
+    });
+});
+
+// Product Management
+Route::prefix('product')->group(function () {
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/', 'index')->name('product');
+        Route::get('/add', 'create')->name('add');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::put('/update/{id}', 'update')->name('update');
+        Route::get('/detail/{id?}', 'getDetail')->name('detail');
+        Route::post('/store', 'store');
+        Route::get('/login', 'login');
+        Route::post('/checkLogin', 'checkLogin');
+        Route::get('/register', 'register');
+        Route::post('/checkRegister', 'checkRegister');
     });
 });
 

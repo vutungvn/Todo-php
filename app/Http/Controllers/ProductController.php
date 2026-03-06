@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -10,12 +11,23 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $products = Product::all();
-        $title = "Product List";
-        return view("admin.product.index", ["products" => $products, "title" => $title]);
+        $query = Product::with('category')->where('is_delete', 0);
+
+        if ($request->filled('keyword')) {
+            $query->where('name', 'like', '%' . $request->keyword . '%');
+        }
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $products = $query->get();
+        $categories = Category::where('is_delete', 0)->where('is_active', 1)->get();
+        $title = "Danh sách sản phẩm";
+
+        return view("admin.product.index", compact('products', 'categories', 'title'));
     }
 
     /**
