@@ -112,6 +112,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->update(['is_delete' => 1]);
+        return redirect()->route('product')->with('success', 'Xóa sản phẩm thành công');
     }
 }

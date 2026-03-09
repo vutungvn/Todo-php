@@ -54,7 +54,7 @@
                             <i class="fas fa-edit"></i> Sửa
                         </a>
                         {{-- {{ route('product.destroy', $product->id) }} --}}
-                        <form action="" method="POST" style="display:inline"
+                        <form action="{{ route('product.destroy', $product->id) }}" method="POST" style="display:inline"
                             onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
                             @csrf
                             @method('DELETE')
