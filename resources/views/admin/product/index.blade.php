@@ -50,7 +50,7 @@
                     <td>{!! $product->is_active ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-secondary">Inactive</span>' !!}</td>
                     <td>
                         {{-- {{ route('product.edit', $product->id) }} --}}
-                        <a href="" class="btn btn-sm btn-warning">
+                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-warning">
                             <i class="fas fa-edit"></i> Sửa
                         </a>
                         {{-- {{ route('product.destroy', $product->id) }} --}}

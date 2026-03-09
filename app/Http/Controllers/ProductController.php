@@ -77,8 +77,10 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         //
-        $product = Product::find($id);
-        return view('admin.product.edit', ['product' => $product]);
+        $product = Product::findOrFail($id);
+        $categories = Category::where('is_delete', 0)->where('is_active', 1)->get();
+        $title = "Sửa sản phẩm";
+        return view('admin.product.edit', compact('product', 'categories', 'title'));
     }
 
     /**
@@ -86,13 +88,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-        $product = Product::find($id);
-        $product->name = $request->input('name');
-        $product->price = $request->input('price');
-        $product->stock = $request->input('stock');
-        $product->save();
-        return redirect('/product');
+        $product = Product::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0|lte:price',
+            'stock' => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'image' => 'nullable|string',
+        ]);
+
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        $product->update($validated);
+
+        return redirect()->route('product')->with('success', 'Cập nhật sản phẩm thành công');
     }
 
     /**

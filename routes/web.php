@@ -44,9 +44,8 @@ Route::prefix('product')->group(function () {
         Route::get('/', 'index')->name('product');
         Route::get('/create', 'create')->name('product.create');
         Route::post('/store', 'store')->name('product.store');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::put('/update/{id}', 'update')->name('update');
-        Route::get('/detail/{id?}', 'getDetail')->name('detail');
+        Route::get('/edit/{id}', 'edit')->name('product.edit');
+        Route::put('/update/{id}', 'update')->name('product.update');
     });
 });
 

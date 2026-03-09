@@ -1,144 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.admin', ['title' => $title])
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Product</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <h3>Form sản phẩm</h3>
+        </div>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
+        <div class="card-body">
+            <form action="{{ route('product.update', $product->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-        }
+                <!-- Tên sản phẩm -->
+                <div class="form-group">
+                    <label>Tên sản phẩm <span class="text-danger">*</span></label>
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                        value="{{ old('name', $product->name) }}" required>
+                    @error('name')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        h1 {
-            color: #333;
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 30px;
-            text-align: center;
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 15px;
-        }
+                <!-- Danh mục -->
+                <div class="form-group">
+                    <label>Danh mục</label>
+                    <select name="category_id" class="form-control @error('category_id') is-invalid @enderror">
+                        <option value="">-- Không chọn --</option>
+                        @foreach ($categories as $cat)
+                            <option value="{{ $cat->id }}" {{ old('category_id', $product->category_id) == $cat->id ? 'selected' : '' }}>
+                                {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+                <!-- Giá -->
+                <div class="form-group">
+                    <label>Giá <span class="text-danger">*</span></label>
+                    <input type="number" name="price" class="form-control @error('price') is-invalid @enderror"
+                        value="{{ old('price', $product->price) }}" min="0" step="0.01" required>
+                    @error('price')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        label {
-            display: block;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
+                <!-- Giá khuyến mãi -->
+                <div class="form-group">
+                    <label>Giá khuyến mãi</label>
+                    <input type="number" name="sale_price" class="form-control @error('sale_price') is-invalid @enderror"
+                        value="{{ old('sale_price', $product->sale_price) }}" min="0" step="0.01">
+                    @error('sale_price')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+                <!-- Tồn kho -->
+                <div class="form-group">
+                    <label>Tồn kho <span class="text-danger">*</span></label>
+                    <input type="number" name="stock" class="form-control @error('stock') is-invalid @enderror"
+                        value="{{ old('stock', $product->stock) }}" min="0" required>
+                    @error('stock')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        input[type="text"]:focus,
-        input[type="number"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
+                <!-- Mô tả -->
+                <div class="form-group">
+                    <label>Mô tả</label>
+                    <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="4">{{ old('description', $product->description) }}</textarea>
+                    @error('description')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-        }
+                <!-- Trạng thái -->
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="is_active" value="1" {{ old('is_active', $product->is_active) ? 'checked' : '' }}>
+                        Kích hoạt
+                    </label>
+                </div>
 
-        .btn {
-            flex: 1;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <h1>Edit Product</h1>
-
-        <form action="{{ route('update', ['id' => $product->id]) }}" method="POST">
-            @csrf
-            @method('PUT')
-
-            <div class="form-group">
-                <label for="name">Product Name</label>
-                <input type="text" id="name" name="name" value="{{ $product->name }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="price">Price</label>
-                <input type="number" id="price" name="price" value="{{ $product->price }}" step="0.01" min="0" required>
-            </div>
-
-            <div class="form-group">
-                <label for="stock">Stock</label>
-                <input type="number" id="stock" name="stock" value="{{ $product->stock }}" min="0" required>
-            </div>
-
-            <div class="btn-group">
-                <button type="submit" class="btn btn-primary">Update Product</button>
-            </div>
-        </form>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <a href="{{ route('product') }}" class="btn btn-secondary">Quay lại</a>
+            </form>
+        </div>
     </div>
-</body>
-
-</html>
+@endsection
