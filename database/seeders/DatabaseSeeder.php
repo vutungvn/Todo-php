@@ -125,6 +125,61 @@ class DatabaseSeeder extends Seeder
                 'is_active' => 1,
                 'is_delete' => 0,
             ],
+            [
+                'category_id' => 2, // Laptop
+                'name' => 'Dell XPS 15',
+                'price' => 42990000,
+                'sale_price' => 39990000,
+                'stock' => 10,
+                'description' => 'Dell XPS 15 Core i7 Gen 13 16GB/512GB',
+                'image' => null,
+                'is_active' => 1,
+                'is_delete' => 0,
+            ],
+            [
+                'category_id' => 1, // Điện thoại
+                'name' => 'Xiaomi 14 Ultra',
+                'price' => 22990000,
+                'sale_price' => 20990000,
+                'stock' => 25,
+                'description' => 'Xiaomi 14 Ultra 512GB Leica Camera',
+                'image' => null,
+                'is_active' => 1,
+                'is_delete' => 0,
+            ],
+            [
+                'category_id' => 3, // Máy tính bảng
+                'name' => 'iPad Pro M4 13 inch',
+                'price' => 32990000,
+                'sale_price' => null,
+                'stock' => 18,
+                'description' => 'iPad Pro M4 13 inch 256GB Wi-Fi',
+                'image' => null,
+                'is_active' => 1,
+                'is_delete' => 0,
+            ],
+            [
+                'category_id' => 4, // Phụ kiện
+                'name' => 'Samsung Galaxy Buds3 Pro',
+                'price' => 4990000,
+                'sale_price' => 3990000,
+                'stock' => 60,
+                'description' => 'Tai nghe Samsung Galaxy Buds3 Pro chống ồn ANC',
+                'image' => null,
+                'is_active' => 1,
+                'is_delete' => 0,
+            ],
+            [
+                'category_id' => 5, // Đồng hồ thông minh
+                'name' => 'Garmin Fenix 8',
+                'price' => 19990000,
+                'sale_price' => 17990000,
+                'stock' => 12,
+                'description' => 'Đồng hồ thể thao Garmin Fenix 8 Solar GPS',
+                'image' => null,
+                'is_active' => 1,
+                'is_delete' => 0,
+            ],
         ];
 
         foreach ($products as $product) {

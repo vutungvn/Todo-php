@@ -76,6 +76,16 @@
                     @enderror
                 </div>
 
+                <!-- Ảnh -->
+                <div class="form-group">
+                    <label>Ảnh (URL hoặc đường dẫn)</label>
+                    <input type="text" name="image" class="form-control @error('image') is-invalid @enderror"
+                        value="{{ old('image') }}" placeholder="vd: uploads/products/sp1.jpg">
+                    @error('image')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <!-- Trạng thái -->
                 <div class="form-group">
                     <label>
